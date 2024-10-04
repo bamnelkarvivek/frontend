@@ -1,0 +1,25 @@
+body {
+    background-color: #f8f9fa; /* Light background color */
+    font-family: 'Open Sans', sans-serif; /* Use a clean font */
+}
+
+h1 {
+    font-size: 2.5rem; /* Larger title */
+}
+
+h3 {
+    font-size: 1.5rem; /* Larger section headings */
+}
+
+button {
+    padding: 10px 20px; /* Increase button padding */
+    border-radius: 25px; /* Rounded corners for buttons */
+}
+
+.list-group-item {
+    border-radius: 5px; /* Slightly rounded corners for list items */
+}
+
+.overflow-auto {
+    overflow-y: auto; /* Add scroll for overflow */
+}
