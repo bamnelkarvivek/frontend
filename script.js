@@ -1,3 +1,6 @@
+// Define the base URL for the backend API
+const BASE_URL = 'http://34.134.95.235'; // Change this to the backend's external IP when needed
+
 // Event listener for user registration form submission
 document.getElementById('register-form').addEventListener('submit', async function (event) {
     event.preventDefault(); // Prevent the form from submitting the traditional way
@@ -5,7 +8,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     const password = document.getElementById('password').value;
 
     try {
-        const response = await fetch('http://localhost:5000/register', {
+        const response = await fetch(`${BASE_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +39,7 @@ document.getElementById('upload-form').addEventListener('submit', async function
     formData.append('file', fileInput.files[0]);
 
     try {
-        const response = await fetch('http://localhost:5000/upload', {
+        const response = await fetch(`${BASE_URL}/upload`, {
             method: 'POST',
             body: formData
         });
@@ -58,7 +61,7 @@ document.getElementById('upload-form').addEventListener('submit', async function
 // Function to fetch and display users
 async function fetchUsers() {
     try {
-        const response = await fetch('http://localhost:5000/users');
+        const response = await fetch(`${BASE_URL}/users`);
         const users = await response.json();
         const usersList = document.getElementById('users-list');
         usersList.innerHTML = ''; // Clear the current list
@@ -78,7 +81,7 @@ async function fetchUsers() {
 // Function to fetch and display uploaded files
 async function fetchFiles() {
     try {
-        const response = await fetch('http://localhost:5000/files');
+        const response = await fetch(`${BASE_URL}/files`);
         const files = await response.json();
         const filesList = document.getElementById('files-list');
         filesList.innerHTML = ''; // Clear the current list
