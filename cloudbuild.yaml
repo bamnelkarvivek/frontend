@@ -1,11 +1,11 @@
 options:
-  logging: 'NONE'
+  logging: 'CLOUD_LOGGING_ONLY'
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/sturdy-filament-400423/assignment1-frontend', './frontend']
+  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend', './frontend']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/sturdy-filament-400423/assignment1-frontend']
+  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend']
 
 images:
-- 'gcr.io/sturdy-filament-400423/assignment1-frontend'
+- 'us.gcr.io/sturdy-filament-400423/assignment1-frontend'
