@@ -14,7 +14,8 @@ steps:
   args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}']
 
 # Replace the image tag in the Kubernetes deployment file
-- name: 'gcr.io/cloud-builders/sed'
+- name: 'debian'
+  entrypoint: 'sed'
   args:
     - '-i'
     - 's|assignment1-frontend:latest|assignment1-frontend:${_BUILD_ID}|g'
