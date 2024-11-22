@@ -44,6 +44,8 @@ steps:
     - 'apply'
     - '-f'
     - 'frontend-deployment.yaml'
+    - '-n'
+    - 'frontend'
 
 # Expose the frontend service
 - name: 'gcr.io/cloud-builders/kubectl'
@@ -51,6 +53,8 @@ steps:
     - 'apply'
     - '-f'
     - 'frontend-service.yaml'
+    - '-n'
+    - 'frontend'    
 
 images:
   - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}'
