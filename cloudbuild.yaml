@@ -1,9 +1,8 @@
+steps:
 # Build the frontend Docker image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend', './frontend']
 
-
 # Push the frontend Docker image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend','./frontend']
-
+  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend']
