@@ -1,11 +1,49 @@
-options:
-  logging: 'CLOUD_LOGGING_ONLY'
-
 steps:
+# Build the frontend Docker image and tag with BUILD_ID
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend', '.']
+  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$(BUILD_ID)', '.']
+
+# Push the image to GCR
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend']
+  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$(BUILD_ID)']
+
+# Replace the image tag in the Kubernetes deployment file
+- name: 'gcr.io/cloud-builders/sed'
+  args:
+    - '-i'
+    - 's|assignment1-frontend:latest|assignment1-frontend:$(BUILD_ID)|g'
+    - 'frontend-deployment.yaml'
+
+# Authenticate with GKE
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    - 'container'
+    - 'clusters'
+    - 'get-credentials'
+    - 'appcluster'
+    - '--zone'
+    - 'us-east1-b'
+
+# Apply the namespace configuration
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - 'apply'
+    - '-f'
+    - 'namespace.yaml'
+
+# Deploy the updated deployment file to GKE
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - 'apply'
+    - '-f'
+    - 'frontend-deployment.yaml'
+
+# Expose the frontend service
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - 'apply'
+    - '-f'
+    - 'frontend-service.yaml'
 
 images:
-- 'us.gcr.io/sturdy-filament-400423/assignment1-frontend'
+  - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$(BUILD_ID)'
