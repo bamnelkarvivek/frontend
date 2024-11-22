@@ -22,7 +22,9 @@ steps:
     - 'frontend-deployment.yaml'
 
 # Authenticate with GKE
-- name: 'gcr.io/cloud-builders/gcloud'
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'gcloud'
   args:
     - 'container'
     - 'clusters'
@@ -30,6 +32,8 @@ steps:
     - 'appcluster'
     - '--zone'
     - 'us-east1-b'
+    - '--project'
+    - 'sturdy-filament-400423'
 
 # Apply the namespace configuration
 - name: 'gcr.io/cloud-builders/kubectl'
