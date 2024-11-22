@@ -3,9 +3,9 @@ options:
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend', './frontend']
+  args: ['build', '-t', 'gcr.io/sturdy-filament-400423/assignment1-frontend', './frontend']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend']
+  args: ['push', 'gcr.io/sturdy-filament-400423/assignment1-frontend']
 
 images:
-- 'us.gcr.io/sturdy-filament-400423/assignment1-frontend'
+- 'gcr.io/sturdy-filament-400423/assignment1-frontend'
