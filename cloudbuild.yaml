@@ -1,20 +1,23 @@
 options:
   logging: 'CLOUD_LOGGING_ONLY'
-  
+
+substitutions:
+  _BUILD_ID: "$BUILD_ID"  # Use the predefined Cloud Build ID
+
 steps:
 # Build the frontend Docker image and tag with BUILD_ID
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$(BUILD_ID)', '.']
+  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}', '.']
 
 # Push the image to GCR
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$(BUILD_ID)']
+  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}']
 
 # Replace the image tag in the Kubernetes deployment file
 - name: 'gcr.io/cloud-builders/sed'
   args:
     - '-i'
-    - 's|assignment1-frontend:latest|assignment1-frontend:$(BUILD_ID)|g'
+    - 's|assignment1-frontend:latest|assignment1-frontend:${_BUILD_ID}|g'
     - 'frontend-deployment.yaml'
 
 # Authenticate with GKE
@@ -49,4 +52,4 @@ steps:
     - 'frontend-service.yaml'
 
 images:
-  - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$(BUILD_ID)'
+  - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}'
