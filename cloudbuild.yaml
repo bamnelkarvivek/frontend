@@ -12,63 +12,13 @@ substitutions:
 steps:
 # Build the frontend Docker image and tag with BUILD_ID
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '.']
 
-# Push the image to GCR
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA']
+  args: ['push', 'gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '.']
 
-# Replace the image tag in the Kubernetes deployment file
-- name: 'debian'
-  entrypoint: 'sed'
-  args:
-    - '-i'
-    - 's|image: us.gcr.io/sturdy-filament-400423/frontend:.*|image: gcr.io/sturdy-filament-400423/frontend:$(_BUILD_ID)|g'
-    - 'frontend-deployment.yaml'
-
-# Authenticate with GKE
-
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'gcloud'
-  args:
-    - 'container'
-    - 'clusters'
-    - 'get-credentials'
-    - 'appcluster'
-    - '--zone'
-    - 'us-east1-b'
-    - '--project'
-    - 'sturdy-filament-400423'
-
-# Verify cluster connection
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: ['config', 'current-context']
-
-# Apply the namespace configuration
-- name: 'gcr.io/cloud-builders/kubectl'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      kubectl create namespace frontend --dry-run=client -o yaml | kubectl apply -f -
-
-# Deploy the updated deployment file to GKE
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-    - 'apply'
-    - '-f'
-    - 'frontend-deployment.yaml'
-    - '-n'
-    - 'frontend'
-
-# Expose the frontend service
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-    - 'apply'
-    - '-f'
-    - 'frontend-service.yaml'
-    - '-n'
-    - 'frontend'    
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['set', 'image', 'deployment/frontend', 'assignment1-frontend=gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '--namespace=frontend']
 
 images:
   - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA'
