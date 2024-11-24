@@ -4,6 +4,7 @@ options:
     - 'CLOUDSDK_CONTAINER_CLUSTER=appcluster'
     - 'CLOUDSDK_CONTAINER_ZONE=us-east1-b'
     - 'CLOUDSDK_CORE_PROJECT=sturdy-filament-400423'
+    - 'CLOUDSDK_COMPUTE_REGION=us-east1-b'
 
 substitutions:
   _BUILD_ID: "$BUILD_ID"  # Use the predefined Cloud Build ID
