@@ -19,10 +19,10 @@ steps:
   args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}']
 
 # Print the build id
-- name: 'gcr.io/cloud-builders/bash'
+- name: 'gcr.io/cloud-builders/bash:latest'
   args:
     - '-c'
-    - 'echo "Build ID: ${_BUILD_ID}'
+    - 'echo "Build ID: ${_BUILD_ID}"'
 
 
 # Replace the image tag in the Kubernetes deployment file
