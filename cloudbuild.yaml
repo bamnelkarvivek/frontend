@@ -12,18 +12,11 @@ substitutions:
 steps:
 # Build the frontend Docker image and tag with BUILD_ID
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}', '.']
+  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '.']
 
 # Push the image to GCR
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}']
-
-# Print the build id
-- name: 'gcr.io/cloud-builders/bash:1.0.0'
-  args:
-    - '-c'
-    - 'echo "Build ID: ${_BUILD_ID}"'
-
+  args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA']
 
 # Replace the image tag in the Kubernetes deployment file
 - name: 'debian'
@@ -78,4 +71,4 @@ steps:
     - 'frontend'    
 
 images:
-  - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}'
+  - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA'
