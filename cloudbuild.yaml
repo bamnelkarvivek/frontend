@@ -21,4 +21,4 @@ steps:
   args: ['set', 'image', 'deployment/frontend-deployment', 'frontend=gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '--namespace=frontend']
 
 images:
-  - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA'
+  - 'gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA'
