@@ -58,7 +58,7 @@ steps:
     - 'apply'
     - '-f'
     - 'frontend-deployment.yaml'
-    - '-- namespace'
+    - '-n'
     - 'frontend'
 
 # Expose the frontend service
@@ -67,7 +67,7 @@ steps:
     - 'apply'
     - '-f'
     - 'frontend-service.yaml'
-    - '-- namespace'
+    - '-n'
     - 'frontend'    
 
 images:
