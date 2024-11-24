@@ -18,6 +18,13 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}']
 
+# Print the build id
+- name: 'gcr.io/cloud-builders/bash'
+  args:
+    - '-c'
+    - 'echo "Build ID: $BUILD_ID"'
+
+
 # Replace the image tag in the Kubernetes deployment file
 - name: 'debian'
   entrypoint: 'sed'
