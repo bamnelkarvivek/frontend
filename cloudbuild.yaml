@@ -17,8 +17,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '.']
 
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['set', 'image', 'deployment/frontend', 'assignment1-frontend=gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '--namespace=frontend']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['set', 'image', 'deployment/frontend', 'assignment1-frontend=gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA', '--namespace=frontend']
 
 images:
   - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:$SHORT_SHA'
