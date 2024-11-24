@@ -37,15 +37,11 @@ steps:
 
 # Apply the namespace configuration
 - name: 'gcr.io/cloud-builders/kubectl'
+  entrypoint: 'sh'
   args:
-    - 'create'
-    - 'namespace'
-    - 'your-namespace'
-    - '--dry-run=client'
-    - '-o'
-    - 'yaml'
-  - |-
-    | kubectl apply -f -
+    - '-c'
+    - |
+      kubectl create namespace your-namespace --dry-run=client -o yaml | kubectl apply -f -
 
 # Deploy the updated deployment file to GKE
 - name: 'gcr.io/cloud-builders/kubectl'
