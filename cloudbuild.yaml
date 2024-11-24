@@ -12,7 +12,7 @@ substitutions:
 steps:
 # Build the frontend Docker image and tag with BUILD_ID
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}', '.']
+  args: ['build', '-t', 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}', './frontend']
 
 # Push the image to GCR
 - name: 'gcr.io/cloud-builders/docker'
@@ -22,19 +22,17 @@ steps:
 - name: 'gcr.io/cloud-builders/bash'
   args:
     - '-c'
-    - 'echo "Build ID: $BUILD_ID"'
-
+    - 'echo "Build ID: ${_BUILD_ID}"'
 
 # Replace the image tag in the Kubernetes deployment file
 - name: 'debian'
   entrypoint: 'sed'
   args:
     - '-i'
-    - 's|image: us.gcr.io/sturdy-filament-400423/frontend:.*|image: gcr.io/sturdy-filament-400423/frontend:$(_BUILD_ID)|g'
-    - 'frontend-deployment.yaml'
+    - 's|image: us.gcr.io/sturdy-filament-400423/frontend:.*|image: us.gcr.io/sturdy-filament-400423/frontend:${_BUILD_ID}|g'
+    - './frontend-deployment.yaml'
 
 # Authenticate with GKE
-
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'gcloud'
   args:
@@ -51,7 +49,7 @@ steps:
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['config', 'current-context']
 
-# Apply the namespace configuration
+# Apply the namespace configuration (creating namespace if it doesn't exist)
 - name: 'gcr.io/cloud-builders/kubectl'
   entrypoint: 'sh'
   args:
@@ -64,7 +62,7 @@ steps:
   args:
     - 'apply'
     - '-f'
-    - 'frontend-deployment.yaml'
+    - './frontend-deployment.yaml'
     - '-n'
     - 'frontend'
 
@@ -73,9 +71,9 @@ steps:
   args:
     - 'apply'
     - '-f'
-    - 'frontend-service.yaml'
+    - './frontend-service.yaml'
     - '-n'
-    - 'frontend'    
+    - 'frontend'
 
 images:
   - 'us.gcr.io/sturdy-filament-400423/assignment1-frontend:${_BUILD_ID}'
