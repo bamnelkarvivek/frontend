@@ -23,7 +23,7 @@ steps:
   entrypoint: 'sed'
   args:
     - '-i'
-    - 's|assignment1-frontend:latest|assignment1-frontend:${_BUILD_ID}|g'
+    - 's|image: us.gcr.io/sturdy-filament-400423/frontend:.*|image: gcr.io/sturdy-filament-400423/frontend:$(_BUILD_ID)|g'
     - 'frontend-deployment.yaml'
 
 # Authenticate with GKE
