@@ -41,7 +41,7 @@ steps:
   args:
     - '-c'
     - |
-      kubectl create namespace your-namespace --dry-run=client -o yaml | kubectl apply -f -
+      kubectl create namespace frontend --dry-run=client -o yaml | kubectl apply -f -
 
 # Deploy the updated deployment file to GKE
 - name: 'gcr.io/cloud-builders/kubectl'
