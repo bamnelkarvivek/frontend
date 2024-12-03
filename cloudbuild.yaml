@@ -2,10 +2,10 @@
 options:
   logging: 'CLOUD_LOGGING_ONLY'
   env:
-    - 'CLOUDSDK_CONTAINER_CLUSTER=appcluster'
-    - 'CLOUDSDK_CONTAINER_ZONE=us-east1-b'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=gke-cluster'
+    - 'CLOUDSDK_CONTAINER_ZONE=us-central1-a'
     - 'CLOUDSDK_CORE_PROJECT=sturdy-filament-400423'
-    - 'CLOUDSDK_COMPUTE_REGION=us-east1-b'
+    - 'CLOUDSDK_COMPUTE_REGION=us-central1'
 
 substitutions:
   _BUILD_ID: "$BUILD_ID"  # Use the predefined Cloud Build ID
